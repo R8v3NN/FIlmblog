@@ -1,0 +1,100 @@
+
+app.post('/search-post', (req, res) => {
+    if (!req.session.user) {
+        res.redirect('/login.html');
+        return;
+    }
+    
+    const { search, FILMGENER } = req.body;
+    let db = new sqlite3.Database('./blog_database.db', (err) => {
+        if (err) {
+            console.error(err.message);
+            return res.status(500).send('Internal Server Error');
+        }
+        console.log('Connected to the blog_database.db.');
+    });
+    
+    try {
+        let selectPostsQuery;
+        let queryParams;
+
+        if (FILMGENER === "FILM_NAME") {
+            selectPostsQuery = `SELECT 
+                FILM_POST.ID_POST,
+                FILM_POST.FILM_NAME,
+                FILM_POST.FILM_DIRACTOR,
+                FILM_POST.FILM_PREMIER,
+                FILM_POST.FILM_POSTER,
+                FILM_POST.SHORT_DSC,
+                FILM_POST.LONG_DSC
+                FROM 
+                FILM_POST
+                WHERE FILM_POST.FILM_NAME LIKE ?;`;
+        } else if (FILMGENER === "FILM_DIRACTOR") {
+            selectPostsQuery = `SELECT 
+                FILM_POST.ID_POST,
+                FILM_POST.FILM_NAME,
+                FILM_POST.FILM_DIRACTOR,
+                FILM_POST.FILM_PREMIER,
+                FILM_POST.FILM_POSTER,
+                FILM_POST.SHORT_DSC,
+                FILM_POST.LONG_DSC
+                FROM 
+                FILM_POST
+                WHERE FILM_POST.FILM_DIRACTOR LIKE ?;`;
+        } else if (FILMGENER === "FILM_PREMIER") {
+            selectPostsQuery = `SELECT 
+                FILM_POST.ID_POST,
+                FILM_POST.FILM_NAME,
+                FILM_POST.FILM_DIRACTOR,
+                FILM_POST.FILM_PREMIER,
+                FILM_POST.FILM_POSTER,
+                FILM_POST.SHORT_DSC,
+                FILM_POST.LONG_DSC
+                FROM 
+                FILM_POST
+                WHERE FILM_POST.FILM_PREMIER LIKE ?;`;
+        } else if (FILMGENER === "FILM_TAG") {
+            selectPostsQuery = `SELECT 
+                FILM_POST.ID_POST,
+                FILM_POST.FILM_NAME,
+                FILM_POST.FILM_DIRACTOR,
+                FILM_POST.FILM_PREMIER,
+                FILM_POST.FILM_POSTER,
+                FILM_POST.SHORT_DSC,
+                FILM_POST.LONG_DSC
+                FROM 
+                FILM_POST
+                JOIN POSTTAG ON FILM_POST.ID_POST = POSTTAG.ID_POST
+                JOIN TAGS_NAME ON POSTTAG.ID_TAG = TAGS_NAME.ID_TAG
+                WHERE TAGS_NAME.TAG_NAME LIKE ?;`;
+        }
+
+        queryParams = [`%${search}%`];
+
+        db.all(selectPostsQuery, queryParams, (err, rows) => {
+            if (err) {
+                console.error(err.message);
+                return res.status(500).send('Internal Server Error');
+            }
+
+            // Read image files from disk
+            rows.forEach(row => {
+                if (row.FILM_POSTER) {
+                    row.FILM_POSTER = '/images/' + row.FILM_POSTER; // Assuming your images are stored in the public/images directory
+                }
+            });
+
+            res.render('dashboard', { 
+                FILM_POST: rows, // Pass FILM_POST to the view
+                user: req.session.user
+            });
+
+            db.close();
+        });
+    } catch (error) {
+        console.error(error.message);
+        db.close();
+        return res.status(500).send('Internal Server Error - LostConnectionWithDatabase');
+    }
+});

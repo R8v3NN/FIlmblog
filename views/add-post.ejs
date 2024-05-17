@@ -1,0 +1,109 @@
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="src/addpost.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-Km4P9RxbdKw5l9PeKj0bKk/JQxLfnKuHVSj/oBtVHk=" crossorigin="anonymous"></script>
+        <title>Add Post</title>
+    </head>
+
+    <body style="background-color: #e4f4f8;" class="d-flex flex-column min-vh-100">
+        <div style="background-color: #0b2033;"class="nav-bar" class="container-fluid" id="nav-bar">
+            <div style="margin-left:950px" class="logo" onclick="window.location.href = '/dashboard'">FILMBLOG</div>
+
+
+            <div class="right-nav" id="right-nav">
+                <% if (user) { %>
+                    <div class="logout-btn" onclick="window.location.href = '/index'" id="logout-btn">Wyloguj</div>
+                    <div class="logout-btn"><%= user %></div>
+                <% } else { %>
+                    <div class="login-btn" onclick="window.location.href = '/login.html'" id="login-btn">Zaloguj</div>
+                <% } %>
+                <img id="profile" class="rounded-circle shadow-1-strong me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp" alt="avatar" width="35" height="35" />
+            </div>
+        </div>
+
+        <div style="height:820px" class="container">
+            <h2>Nowy post!</h2>
+            <div class="post-form" id="post-form">
+                <form method="post" action="/add-post" enctype="multipart/form-data">
+                    <!-- Pozostałe elementy nawigacji -->
+                    <div class="row g-2 ">
+                        <div class="col-md pt-1 pb-1">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" name="FILMNAME" required />
+                                <label for="floatingInputGrid">Nazwa filmu:</label>
+                            </div>
+                        </div>                    
+                        <div class="col-md pt-1 pb-1">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" name="FILMDIRACTOR" required />
+                                <label for="floatingInputGrid"> Reżyser filmu:</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                        
+                    <div class="row g-2">
+                        <div class="col-md pt-1 pb-1">
+                            <div class="form-floating">
+                                <input type="date" class="form-control" name="FILMPREMIER"/>
+                                <label for="floatingInputGrid">Premiera filmu:</label>
+                            </div>
+                        </div>                    
+                        <div class="col-md pt-1 pb-1">
+                            <div class="form-floating">
+                                <select class="form-select" aria-label=".form-select-sm example" name="ID_TAG">
+                                    <% TAGS_NAME.forEach(function(genre){ %>
+                                        <option value="<%= genre.ID_TAG %>"><%= genre.TAG_NAME %></option>
+                                    <% }); %>    
+                                </select>                                                 
+                                <label for="floatingInputGrid">Genre:</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md pt-1 pb-1">
+                        <div class="form-floating">
+                            <textarea maxlength="512" style="height:235px;max-height:235px;min-height:235px;" class="form-control" id="FILMSHORTDSC" rows="3" name="FILMSHORTDSC"></textarea>
+                            <label for="floatingInputGrid">Krótki opis filmu:</label>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md pt-1 pb-1">
+                        <div class="form-floating">
+                            <textarea style="height:210px;max-height:210px;min-height:210px;" maxlength="8000" class="form-control" id="FILMSHORTDSC" rows="3" name="FILMLONGDSC"></textarea>
+                            <label for="floatingInputGrid">Długi opis filmu:</label>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md">
+                        <label style="color:rgb(48, 46, 46)">Poster filmu:</label>
+                        <input type="file" class="form-control align-self-end " name="FILM_POSTER" />
+                    </div>
+                    
+                    <div  class="row mb-3 pt-3">
+                        <div class="offset-sm-3 col-sm-3 d-grid">
+                            <button type="submit" href="/" class="btn btn-primary">Dodaj</button>
+                        </div>
+                        <div class="col-sm-3 d-grid">
+                            <button type="href" onclick="window.location.href = '/dashboard'" class="btn btn-primary">Anuluj</button>    
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <footer class="footer mt-auto py-3 bg-light">
+            <!-- Copyright -->
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
+              © 2020 Copyright:
+              <a class="text-body">Nakrewicz Dawid</a>
+            </div>
+            <!-- Copyright -->
+          </footer>
+    </body>
+    </html>

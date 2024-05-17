@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Blog</title>
+        <link rel="stylesheet" href="src/dashboard.css">
+        <link rel="stylesheet" href="post.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    </head>
+
+    <body style="background-color: #222224;">
+        <div class="nav-bar" class="container-fluid" id="nav-bar">
+            <div class="logo">BLOGAS</div>
+
+            <div class="search" id="search">
+                <form action="/search" method="get">
+                    <input name="search" type="text" placeholder="Search..." class="search-bar">
+                </form>
+                    <input type="image" src="img/Icons/icon_search_white.png" alt="Search" class="search-icon" id="search-icon">
+            </div>
+
+            <div class="right-nav" id="right-nav">
+                <div class="login-btn" onclick="window.location.href = '/login.html'" id="login-btn">LOGIN</div>
+                <div class="notification" id="notification"><img src="img/Icons/icon_bell_white.png" alt="notification" id="bell"></div>
+                <div class="profile" id="profile"></div>
+            </div>
+        </div>
+        <div class="container px-4 px-lg-5" id="main">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <article class="post">
+                        <header class="post-header">
+                            <p class="post-more">•••</p>
+                            <!-- <div class="post-profile"></div> -->
+                            <h2 class="post-title">Zaloguj się aby zobaczyć wszystkie posty!</h2>
+                            <div class="post-meta">
+                                <p class="post-author">Admin</p>
+                                <p class="post-space">•</p>
+                                <p class="post-date">10-10-2023</p>
+                            </div>
+                        </header>
+                        <div class="post-content">
+                            <p>To jest treść mojego postu...</p>
+                        </div>
+                        <footer class="post-footer">
+                            <p class="post-comments">Komentarze: 10</p>
+                            <img src="img/Icons/icon_arrow_up_grey.png" id="post-arrow-up">
+                            <p class="post-upvotes">Upvotes: 100</p>
+                        </footer>
+
+                        <div class="comment-section">
+                            <div class="post-comment">
+                                <form type="post">
+                                    <div class="comment-input-container">
+                                        <input type="text" class="write-comment" placeholder="Write comment...">
+                                        <input type="image" src="img/Icons/icon_send.png" alt="Send" class="send-icon" id="send-icon">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="user-comments" id="user-comments">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="d-flex flex-start">
+                                            <img class="rounded-circle shadow-1-strong me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp" alt="avatar" width="43" height="43" />
+                                            <div class="flex-grow-1 flex-shrink-1">
+                                                <div>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <p class="mb-1" style="font-size: 0.9rem;"> Maria Smantha <span class="small" style="font-size: 0.7rem;">- 2 hours ago</span></p>
+                                                    </div>
+                                                    <p class="small mb-0" style="font-size: 0.8rem;">
+                                                        It is a long established fact that a reader will be distracted the readable content of a page.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
