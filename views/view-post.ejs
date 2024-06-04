@@ -48,8 +48,19 @@
                     <div style="width:50%;"class="col-xs-12 col-sm-5 col-md-5 col-lg-4">
                         <img style="height:100%;width:100%"src="<%= post.FILM_POSTER %>" class="img-thumbnail" alt="image post">                  
                     </div>
+                  
                     <div style="width:50%;" class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
+                       
                         <header class="post-header">
+                            <% if (user) { %>
+                                <form action="/download-post/<%= post.ID_POST %>" method="post">
+                                    <input type="hidden" name="post_id" value="<%= post.ID_POST %>">
+                                        <button type="submit" class="hidden-button">
+                                            <p>Zapisz Posta!</p>
+                                        </button>
+                                </form>
+                            <% } else { %>
+                            <% } %>
                             <h2 class="post-title"><%= post.FILM_NAME %></h2>
                             <div class="post-meta">
                                 <p class="post-author">Reżyser: <%= post.FILM_DIRACTOR %></p>

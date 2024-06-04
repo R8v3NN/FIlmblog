@@ -529,6 +529,78 @@ app.post('/delete-comment', (req, res) => {
         res.redirect(`/view-post/${post_id}`); // Correctly redirect using post_id
     });
 });
+app.post('/download-post/:id', (req, res) => {
+    if (!req.session.user) {
+        res.redirect('/login.html');
+        return;
+    }
+    const postId = req.params.id;
+    let db = new sqlite3.Database('./blog_database.db', (err) => {
+        if (err) {
+            console.error(err.message);
+            return res.status(500).send('Internal Server Error');
+        }
+        console.log('Connected to the blog_database.db.');
+
+        const selectPostQuery = `SELECT 
+            ID_POST,
+            FILM_NAME,
+            FILM_DIRACTOR,
+            FILM_PREMIER,
+            FILM_POSTER,
+            LONG_DSC
+            FROM 
+            FILM_POST
+            WHERE 
+            ID_POST = ?;`;
+
+        const selectCommentsQuery = `SELECT 
+            c.ID_COMMENT,
+            c.COMMENT, 
+            c.COM_TIME_ADD,
+            u.LOGIN AS USER_LOGIN 
+            FROM COMMENTS c 
+            INNER JOIN USER u ON c.ID_USER = u.ID_USER 
+            WHERE c.ID_POST = ?;`;
+
+        db.get(selectPostQuery, [postId], (err, post) => {
+            if (err) {
+                db.close();
+                return console.error(err.message);
+            }
+
+            if (!post) {
+                db.close();
+                return res.status(404).send('Post Not Found');
+            }
+
+            db.all(selectCommentsQuery, [postId], (err, comments) => {
+                if (err) {
+                    db.close();
+                    return console.error(err.message);
+                }
+
+                const data = {
+                    post: post,
+                    comments: comments,
+                    user: req.session.user
+                };
+
+                const filePath = path.join(__dirname, `post_${postId}.json`);
+                fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
+                res.download(filePath, (err) => {
+                    if (err) {
+                        console.error(err);
+                        res.status(500).send('Error downloading the file');
+                    } else {
+                        console.log(`Post data saved to ${filePath}`);
+                    }
+                });
+                db.close();
+            });
+        });
+    });
+});
 
 
 

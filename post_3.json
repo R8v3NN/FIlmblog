@@ -1,0 +1,49 @@
+{
+  "post": {
+    "ID_POST": 3,
+    "FILM_NAME": "Spider-Man",
+    "FILM_DIRACTOR": "Sam Raimi",
+    "FILM_PREMIER": "2002-04-30",
+    "FILM_POSTER": "FILM_POSTER-1715689453561.png",
+    "LONG_DSC": "\"Spider-Man\" to amerykański film fantastycznonaukowy z 2002 roku, oparty na komiksach o postaci Spider-Man wydawnictwa Marvel Comics. Reżyserem filmu był Sam Raimi, a główne role zagrali Tobey Maguire jako Peter Parker / Spider-Man, Kirsten Dunst jako Mary Jane Watson i Willem Dafoe jako Norman Osborn / Zielony Goblin.  Film opowiada historię Petera Parkera, zwykłego chłopaka, który po ukąszeniu przez genetycznie zmodyfikowanego pająka zyskuje nadludzkie zdolności, w tym super siłę i zdolność do chodzenia po ścianach. Peter decyduje się użyć swoich mocy do walki ze złem jako Spider-Man, jednocześnie balansując życie superbohatera z codziennymi wyzwaniami życia osobistego.  \"Spider-Man\" odniósł ogromny sukces komercyjny i został uznany za jeden z najlepszych filmów o superbohaterach, dzięki dynamicznej akcji, dobrze rozwiniętym postaciom oraz emocjonalnej głębi. Film zapoczątkował również serię kinowych adaptacji przygód Spider-Mana."
+  },
+  "comments": [
+    {
+      "ID_COMMENT": 29,
+      "COMMENT": "c",
+      "COM_TIME_ADD": "2024-05-14 19:28:34",
+      "USER_LOGIN": "user2"
+    },
+    {
+      "ID_COMMENT": 33,
+      "COMMENT": "asdfsadf",
+      "COM_TIME_ADD": "2024-05-14 21:12:12",
+      "USER_LOGIN": "user2"
+    },
+    {
+      "ID_COMMENT": 34,
+      "COMMENT": "asdfasdf",
+      "COM_TIME_ADD": "2024-05-14 21:12:13",
+      "USER_LOGIN": "user2"
+    },
+    {
+      "ID_COMMENT": 35,
+      "COMMENT": "asdfasf",
+      "COM_TIME_ADD": "2024-05-14 21:12:15",
+      "USER_LOGIN": "user2"
+    },
+    {
+      "ID_COMMENT": 36,
+      "COMMENT": "asdfddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "COM_TIME_ADD": "2024-05-14 21:12:23",
+      "USER_LOGIN": "user2"
+    },
+    {
+      "ID_COMMENT": 38,
+      "COMMENT": "uewrguqewgr",
+      "COM_TIME_ADD": "2024-05-15 07:25:13",
+      "USER_LOGIN": "user1"
+    }
+  ],
+  "user": "user2"
+}
