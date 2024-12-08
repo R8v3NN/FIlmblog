@@ -1,6 +1,6 @@
 # This is a filmblog that is easy to test:
 Made with Sqlite for database, bootstrap, express
-to start use: node app
+to start use: node app.js
 Fuction list:
 - Adding new filmpost with img
 - Adding comments to the post
