@@ -17,6 +17,8 @@ const upload = multer({ storage: storage });
 
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
+const flash = require('connect-flash');
+app.use(flash());
 
 app.set('view engine', 'ejs');
 
@@ -44,16 +46,50 @@ app.post('/login', (req, res) => {
         }
 
         if (!row) {
-            res.status(401).send('User does not exist');
+            res.status(401).send(`
+                <html>
+                    <head>
+                        <title>Login Successful</title>
+                        <script type="text/javascript">
+                            // Show the popup with the "Nieprawidłowy login lub hasło. Spróbuj ponownie." message
+                            alert("Nieprawidłowy login lub hasło. Spróbuj ponownie.");
+    
+                            // Redirect to the dashboard after the popup
+                            setTimeout(() => {
+                                window.location.href = '/login.html';
+                            }, 1000); // 1 second delay
+                        </script>
+                    </head>
+                    <body>
+                        <!-- Optional: You can have an empty body or add some content here if needed -->
+                    </body>
+                </html>
+            `);
             return;
         }
 
         req.session.user = row.LOGIN;
         req.session.user_id = row.ID_USER;
+        res.send(`
+            <html>
+                <head>
+                    <title>Login Successful</title>
+                    <script type="text/javascript">
+                        // Show the popup with the "Zalogowano pomyślnie." message
+                        alert("Zalogowano pomyślnie.");
 
-        res.redirect('/dashboard');
+                        // Redirect to the dashboard after the popup
+                        setTimeout(() => {
+                            window.location.href = '/dashboard';
+                        }, 1000); // 1 second delay
+                    </script>
+                </head>
+                <body>
+                    <!-- Optional: You can have an empty body or add some content here if needed -->
+                </body>
+            </html>
+        `);
     });
-    
 });
 
 app.get('/register.html', (req, res) => {
@@ -64,7 +100,51 @@ app.post('/register', (req, res) => {
     const { username, password, confirm_password } = req.body;
 
     if (password !== confirm_password) {
-        res.status(400).send('Passwords do not match');
+        res.status(400).send(`
+            <html>
+                <head>
+                    <title>Login Successful</title>
+                    <script type="text/javascript">
+                        // Show the popup with the "Hasła się różnią" message
+                        alert("Hasła się różnią");
+
+                        // Redirect to the dashboard after the popup
+                        setTimeout(() => {
+                            window.location.href = '/register.html';
+                        }, 1000); // 1 second delay
+                    </script>
+                </head>
+                <body>
+                    <!-- Optional: You can have an empty body or add some content here if needed -->
+                </body>
+            </html>
+        `);
+        console.log(`Hasła się różnią`);
+        return;
+    }
+
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+    if (!passwordRegex.test(password)) {
+        res.status(400).send(`
+            <html>
+                <head>
+                    <title>Password Validation Failed</title>
+                    <script type="text/javascript">
+                        // Show the popup with the password validation message
+                        alert("Hasło musi mieć co najmniej 8 znaków, w tym jedną dużą literę, jedną cyfrę i jeden znak specjalny.");
+
+                        // Redirect to the login page after the popup
+                        setTimeout(() => {
+                            window.location.href = '/register.html';
+                        }, 1000); // 1 second delay
+                    </script>
+                </head>
+                <body>
+                </body>
+            </html>
+        `);
+        console.log(`Hasło musi mieć co najmniej 8 znaków, w tym jedną dużą literę, jedną cyfrę i jeden znak specjalny.`);
         return;
     }
 
@@ -82,7 +162,26 @@ app.post('/register', (req, res) => {
         }
 
         if (row) {
-            res.status(400).send('User already exists');
+            res.status(400).send(`
+                <html>
+                    <head>
+                        <title>Login Successful</title>
+                        <script type="text/javascript">
+                            // Show the popup with the "Ten adres e-mail jest już zarejestrowany." message
+                            alert("Ten adres e-mail jest już zarejestrowany.");
+    
+                            // Redirect to the dashboard after the popup
+                            setTimeout(() => {
+                                window.location.href = '/register.html';
+                            }, 1000); // 1 second delay
+                        </script>
+                    </head>
+                    <body>
+                        <!-- Optional: You can have an empty body or add some content here if needed -->
+                    </body>
+                </html>
+            `);
+            console.log(`Ten adres e-mail jest już zarejestrowany.`);
             return;
         }
 
@@ -92,9 +191,28 @@ app.post('/register', (req, res) => {
                 return console.error(err.message);
             }
             console.log(`A row has been inserted with rowid ${this.lastID}`);
+            console.log(`Zarejestrowano pomyślnie.`);
             req.session.user = username;
             req.session.user_id = this.lastID;
-            res.redirect('/dashboard?registrationSuccess=true');
+            res.send(`
+                <html>
+                    <head>
+                        <title>Login Successful</title>
+                        <script type="text/javascript">
+                            // Show the popup with the "Zarejestrowano pomyślnie." message
+                            alert("Zarejestrowano pomyślnie.");
+    
+                            // Redirect to the dashboard after the popup
+                            setTimeout(() => {
+                                window.location.href = '/dashboard?registrationSuccess=true';
+                            }, 1000); // 1 second delay
+                        </script>
+                    </head>
+                    <body>
+                        <!-- Optional: You can have an empty body or add some content here if needed -->
+                    </body>
+                </html>
+            `);
         });
     });
 
